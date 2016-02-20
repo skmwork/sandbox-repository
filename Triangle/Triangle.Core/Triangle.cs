@@ -71,7 +71,7 @@ namespace Triangle.Core
 
         public double Semiperimeter { get; private set; }
 
-        public double Area
+        public virtual double Area
         {
             get { return Math.Pow(Semiperimeter * (Semiperimeter - A) * (Semiperimeter - B) * (Semiperimeter - C), 0.5); }
         }

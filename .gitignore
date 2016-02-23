@@ -44,7 +44,8 @@ $RECYCLE.BIN/
 .AppleDesktop
 Network Trash Folder
 Temporary Items
-.apdisk
+bin/
+*.apdisk
 *.txt
 *.dll
 *.pdb
@@ -55,4 +56,3 @@ Temporary*.cs
 Symbols/packages/NLog.4.2.3/NLog.4.2.3.nupkg
 *.xml
 *.manifest
-*\bin\*

@@ -46,6 +46,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 *.txt
-Triangle/Triangle.Core/obj/Debug/Triangle.Core.csproj.FileListAbsolute.txt
+*.dll
+*.pdb
+*.cache
 # Temporary Test Files
 Temporary*.cs

@@ -17,7 +17,7 @@ namespace Symbols.Console
         {
             var inputDir = ConfigurationManager.AppSettings["InputDir"];         
             var outputPath = ConfigurationManager.AppSettings["OutputPath"];
-            var watcher = new FileWatcherByEvents(new FileProcessor( inputDir, outputPath));
+            var watcher = new FileWatcherByEvents(inputDir, outputPath);
             watcher.Start();
             logger.Info("Для выхода нажмите ESC");
             do
@@ -26,6 +26,7 @@ namespace Symbols.Console
                 {
                 }
             } while (System.Console.ReadKey(true).Key != ConsoleKey.Escape);
+            watcher.Stop();
         }
     }
 }

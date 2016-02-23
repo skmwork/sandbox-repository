@@ -12,31 +12,88 @@ namespace Symbols.Tests
     public class FileWatchTests
     {
         [TestMethod]
-        public void FilesTest()
+        public void FilesTest1()
         {
             const string inputDir = @"in";
             const string outputPath = @"out\res.txt";
-            if (Directory.Exists(inputDir))
+
+            var watcher = new FileWatcherByEvents(inputDir, outputPath);
+            if (Directory.Exists(watcher.InputDir))
             {
-                Directory.GetFiles(inputDir).ToList().ForEach(File.Delete);
+                Directory.GetFiles(watcher.InputDir).ToList().ForEach(File.Delete);
             }
-            if (File.Exists(outputPath))
+            if (File.Exists(watcher.OutputPath))
             {
-                File.Delete(outputPath);
+                File.Delete(watcher.OutputPath);
             }
-            var processor = new FileProcessor(inputDir, outputPath);
-            var watcher = new FileWatcherByEvents(processor);
-            watcher.Start();
-            File.WriteAllText(Path.Combine(inputDir, "hello.txt"),"hello world");
+            File.WriteAllText(Path.Combine(inputDir, "hello.txt"), "hello world");
             File.WriteAllText(Path.Combine(inputDir, "hello2.txt"), "hello world");
             File.WriteAllText(Path.Combine(inputDir, "repeata.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
             File.WriteAllText(Path.Combine(inputDir, "repeata2.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
-            while (processor.FilesCount != 4)
+            File.WriteAllText(Path.Combine(inputDir, "empty.txt"), string.Empty);
+            File.WriteAllText(Path.Combine(inputDir, "b.txt"), "b");
+            watcher.Start();
+            Assert.AreEqual(watcher.FileOriginalCount,3);
+            var result = File.ReadAllText(watcher.OutputPath);
+            Assert.IsTrue(result.Contains(
+                "a:23\r\nl:3\r\no:2\r\n :1\r\nb:1"));
+        }
+
+        [TestMethod]
+        public void FilesTest2()
+        {
+            const string inputDir = @"in";
+            const string outputPath = @"out\res.txt";
+
+            var watcher = new FileWatcherByEvents(inputDir, outputPath);
+            if (Directory.Exists(watcher.InputDir))
+            {
+                Directory.GetFiles(watcher.InputDir).ToList().ForEach(File.Delete);
+            }
+            if (File.Exists(watcher.OutputPath))
+            {
+                File.Delete(watcher.OutputPath);
+            }
+
+            watcher.Start();
+            File.WriteAllText(Path.Combine(inputDir, "hello.txt"), "hello world");
+            File.WriteAllText(Path.Combine(inputDir, "hello2.txt"), "hello world");
+            File.WriteAllText(Path.Combine(inputDir, "repeata.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
+            File.WriteAllText(Path.Combine(inputDir, "repeata2.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
+            File.WriteAllText(Path.Combine(inputDir, "empty.txt"), string.Empty);
+             File.WriteAllText(Path.Combine(inputDir, "b.txt"), "b");
+            while (watcher.FileOriginalCount < 3)
             {
             }
-            var result = File.ReadAllText(outputPath);
+            Assert.AreEqual(watcher.FileOriginalCount, 3);
+            var result = File.ReadAllText(watcher.OutputPath);
             Assert.IsTrue(result.Contains(
-                "a:23\r\nl:3\r\no:2\r\n :1\r\nd:1"));
+                "a:23\r\nl:3\r\no:2\r\n :1\r\nb:1"));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Параметр null неверно обработан")]
+        public void NullParamsTest1()
+        {
+            new FileWatcherByEvents(null, "adwadwd");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Параметр null неверно обработан")]
+        public void NullParamsTest2()
+        {
+            new FileWatcherByEvents("awdadw", null);
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Параметр null неверно обработан")]
+        public void EmptyParamsTest1()
+        {
+            new FileWatcherByEvents(string.Empty, "adwadwd");
+        }
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentException), "Параметр null неверно обработан")]
+        public void EmptyParamsTest2()
+        {
+            new FileWatcherByEvents("awdadw", string.Empty);
         }
 
     }

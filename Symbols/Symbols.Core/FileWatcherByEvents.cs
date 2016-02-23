@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Symbols.Core
 {
@@ -34,7 +35,7 @@ namespace Symbols.Core
 
         public void Start()
         {
-            Directory.GetFiles(InputDir, "*.txt").Select(File.ReadAllText).ToList().ForEach(_stats.AddStatistic);
+            Directory.GetFiles(InputDir, "*.txt").Select(x=>File.ReadAllText(x,Encoding.UTF8)).ToList().ForEach(_stats.AddStatistic);
             OnStatisticsWasUpdated();           
             _watcher.Created += WatcherOnCreated;
         }
@@ -46,7 +47,7 @@ namespace Symbols.Core
                 return;
             }
             FilesInStatistics = _stats.Md5List.Count;
-            _stats.AddStatistic(File.ReadAllText(fileSystemEventArgs.FullPath));
+            _stats.AddStatistic(File.ReadAllText(fileSystemEventArgs.FullPath, Encoding.UTF8));
             if (FilesInStatistics != _stats.Md5List.Count)
             {
                 OnStatisticsWasUpdated();

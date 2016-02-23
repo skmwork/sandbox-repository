@@ -55,3 +55,4 @@ Temporary*.cs
 Symbols/packages/NLog.4.2.3/NLog.4.2.3.nupkg
 *.xml
 *.manifest
+*\bin\*

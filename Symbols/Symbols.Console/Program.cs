@@ -16,10 +16,10 @@ namespace Symbols.Console
                 watcher.StatisticsWasUpdated += s =>
                 {
                     System.Console.Clear();
-                    System.Console.WriteLine("Производится отслеживание папки {0}\r\nLastUpdate: {1}\r\n{2}",
-                        watcher.InputDir
-                        , DateTime.Now.ToString("G")
-                        , string.Join("\r\n", s.Select(x => "'" + x.Key + "'  :   " + x.Value).ToArray()));
+                    System.Console.WriteLine("Кодировка поступающих файлов должна быть UTF-8");
+                    System.Console.WriteLine("Производится отслеживание папки {0}",watcher.InputDir);
+                    System.Console.WriteLine("LastUpdate: {0}",DateTime.Now.ToString("G"));
+                    System.Console.WriteLine(string.Join("\r\n", s.Select(x => "'" + x.Key + "'  :   " + x.Value).ToArray()));
                     WaitConsoleMessage();
                 };
                 watcher.Start();

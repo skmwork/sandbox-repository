@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Symbols.Core
 {
-    public class FileWatcherByEvents
+    public class FileWatcherByEvents:IDisposable
     {
         private readonly FileSystemWatcher _watcher;
 
@@ -15,7 +15,7 @@ namespace Symbols.Core
 
         private readonly SymbolStatistics _stats;
 
-        public event Action<Dictionary<char,int>> StatisticsWasUpdated;
+        public event Action<Dictionary<char, int>> StatisticsWasUpdated;
 
         public FileWatcherByEvents(string inDir)
         {
@@ -35,21 +35,8 @@ namespace Symbols.Core
         public void Start()
         {
             Directory.GetFiles(InputDir, "*.txt").Select(File.ReadAllText).ToList().ForEach(_stats.AddStatistic);
-            OnStatisticsWasUpdated();
+            OnStatisticsWasUpdated();           
             _watcher.Created += WatcherOnCreated;
-        }
-
-        private void OnStatisticsWasUpdated()
-        {
-            if (FilesInStatistics != _stats.Md5List.Count)
-            {
-                var result = _stats.Top5Symbols;
-                if (StatisticsWasUpdated != null)
-                {
-                    StatisticsWasUpdated(result);
-                }
-                FilesInStatistics = _stats.Md5List.Count;
-            }
         }
 
         private void WatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs)
@@ -60,7 +47,20 @@ namespace Symbols.Core
             }
             FilesInStatistics = _stats.Md5List.Count;
             _stats.AddStatistic(File.ReadAllText(fileSystemEventArgs.FullPath));
-            OnStatisticsWasUpdated();
+            if (FilesInStatistics != _stats.Md5List.Count)
+            {
+                OnStatisticsWasUpdated();
+            }
+        }
+
+        private void OnStatisticsWasUpdated()
+        {
+            var result = _stats.Top5Symbols;
+            if (StatisticsWasUpdated != null)
+            {
+                StatisticsWasUpdated(result);
+            }
+            FilesInStatistics = _stats.Md5List.Count;
         }
 
         public void Stop()
@@ -68,5 +68,9 @@ namespace Symbols.Core
             _watcher.Created -= WatcherOnCreated;
         }
 
+        public void Dispose()
+        {
+            Stop();
+        }
     }
 }

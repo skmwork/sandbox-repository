@@ -2,15 +2,12 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using NLog;
 
 namespace Symbols.Core
 {
     internal class SymbolStatistics
     {
-
         public Dictionary<char, int> Statistics { get; private set; }
-        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         internal SymbolStatistics()
         {
@@ -41,7 +38,7 @@ namespace Symbols.Core
                     return;
                 }
                 Statistics[x] += 1;
-            });           
+            });
         }
 
         public Dictionary<char, int> Top5Symbols
@@ -53,9 +50,8 @@ namespace Symbols.Core
 
         static string GetMd5Hash(MD5 md5Hash, string input)
         {
-
             // Convert the input string to a byte array and compute the hash.
-            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+            var data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
 
             // Create a new Stringbuilder to collect the bytes
             // and create a string.

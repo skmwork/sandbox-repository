@@ -25,7 +25,6 @@ namespace Symbols.Console
                 watcher.Start();
                 WaitEsc();
                 watcher.Stop();
-
             }
             catch (Exception e)
             {

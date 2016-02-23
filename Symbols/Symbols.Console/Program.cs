@@ -12,28 +12,31 @@ namespace Symbols.Console
             {
                 System.Console.WriteLine("Введите путь к папке");
                 var inputDir = System.Console.ReadLine();
-                using (var watcher = new FileWatcherByEvents(inputDir))
+                var watcher = new FileWatcherByEvents(inputDir);
+                watcher.StatisticsWasUpdated += s =>
                 {
-                    watcher.StatisticsWasUpdated += s =>
-                    {
-                        System.Console.Clear();
-                        System.Console.WriteLine("Производится отслеживание папки {0}\r\nLastUpdate: {1}\r\n{2}",
-                            watcher.InputDir
-                            , DateTime.Now.ToString("G")
-                            , string.Join("\r\n", s.Select(x => "'" + x.Key + "'  :   " + x.Value).ToArray()));
-                        System.Console.WriteLine("Для выхода нажмите ESC");
-                    };
-                    watcher.Start();
-                    WaitEsc();
-                }
+                    System.Console.Clear();
+                    System.Console.WriteLine("Производится отслеживание папки {0}\r\nLastUpdate: {1}\r\n{2}",
+                        watcher.InputDir
+                        , DateTime.Now.ToString("G")
+                        , string.Join("\r\n", s.Select(x => "'" + x.Key + "'  :   " + x.Value).ToArray()));
+                    WaitConsoleMessage();
+                };
+                watcher.Start();
+                WaitEsc();
+                watcher.Stop();
             }
             catch (Exception e)
             {
                 System.Console.WriteLine(e);
-                System.Console.WriteLine("Для выхода нажмите ESC");
-                WaitEsc();            
+                WaitConsoleMessage();
+                WaitEsc();
             }
+        }
 
+        static void WaitConsoleMessage()
+        {
+            System.Console.WriteLine("Для выхода нажмите ESC");
         }
 
         static void WaitEsc()

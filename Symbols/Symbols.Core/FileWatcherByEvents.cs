@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Symbols.Core
 {
-    public class FileWatcherByEvents:IDisposable
+    public class FileWatcherByEvents
     {
         private readonly FileSystemWatcher _watcher;
 
@@ -66,11 +66,6 @@ namespace Symbols.Core
         public void Stop()
         {
             _watcher.Created -= WatcherOnCreated;
-        }
-
-        public void Dispose()
-        {
-            Stop();
         }
     }
 }

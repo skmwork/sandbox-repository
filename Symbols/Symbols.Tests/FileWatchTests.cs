@@ -28,12 +28,13 @@ namespace Symbols.Tests
             }
             File.WriteAllText(Path.Combine(inputDir, "hello.txt"), "hello world");
             File.WriteAllText(Path.Combine(inputDir, "hello2.txt"), "hello world");
+            File.WriteAllText(Path.Combine(inputDir, "hello2.scv"), "there are chars");
             File.WriteAllText(Path.Combine(inputDir, "repeata.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
             File.WriteAllText(Path.Combine(inputDir, "repeata2.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
             File.WriteAllText(Path.Combine(inputDir, "empty.txt"), string.Empty);
             File.WriteAllText(Path.Combine(inputDir, "b.txt"), "b");
             watcher.Start();
-            Assert.AreEqual(watcher.FileOriginalCount,3);
+            Assert.AreEqual(watcher.FilesInStatistics,3);
             var result = File.ReadAllText(watcher.OutputPath);
             Assert.IsTrue(result.Contains(
                 "a:23\r\nl:3\r\no:2\r\n :1\r\nb:1"));
@@ -62,10 +63,11 @@ namespace Symbols.Tests
             File.WriteAllText(Path.Combine(inputDir, "repeata2.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
             File.WriteAllText(Path.Combine(inputDir, "empty.txt"), string.Empty);
              File.WriteAllText(Path.Combine(inputDir, "b.txt"), "b");
-            while (watcher.FileOriginalCount < 3)
+             File.WriteAllText(Path.Combine(inputDir, "hello2.scv"), "there are chars");
+            while (watcher.FilesInStatistics < 3)
             {
             }
-            Assert.AreEqual(watcher.FileOriginalCount, 3);
+            Assert.AreEqual(watcher.FilesInStatistics, 3);
             var result = File.ReadAllText(watcher.OutputPath);
             Assert.IsTrue(result.Contains(
                 "a:23\r\nl:3\r\no:2\r\n :1\r\nb:1"));

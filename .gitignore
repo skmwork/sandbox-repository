@@ -45,6 +45,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 bin/
+obj/
 *.apdisk
 *.txt
 *.dll

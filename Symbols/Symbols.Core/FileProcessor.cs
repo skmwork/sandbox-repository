@@ -10,8 +10,8 @@ namespace Symbols.Core
     public class FileProcessor : IFileProcessor
     {
 
-        private static Logger logger = LogManager.GetCurrentClassLogger();
-        private SymbolStatistics _stats;
+        private static Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly SymbolStatistics _stats;
 
         public string OutputPath { get; private set; }
 
@@ -75,7 +75,7 @@ namespace Symbols.Core
             }
             catch (Exception e)
             {
-                logger.Error(e);
+                _logger.Error(e);
             }
         }
 

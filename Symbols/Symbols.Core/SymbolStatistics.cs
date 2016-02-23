@@ -10,7 +10,7 @@ namespace Symbols.Core
     {
 
         public Dictionary<char, int> Statistics { get; private set; }
-        private static Logger _logger = LogManager.GetCurrentClassLogger();
+        private readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         internal SymbolStatistics()
         {

@@ -32,9 +32,13 @@ namespace Symbols.Tests
                 result = s;
             };
             watcher.Start();
+            var start = DateTime.Now;
             while (watcher.FilesInStatistics < 3)
             {
-
+                if (DateTime.Now - start > TimeSpan.FromSeconds(30))
+                {
+                    throw new TimeoutException();
+                }
             }
             Assert.IsNotNull(result);
             Assert.IsTrue(result.SequenceEqual(new Dictionary<char, int> { { 'a', 23 }, { 'l', 3 }, { 'o', 2 }, { ' ', 1 }, { 'b', 1 } }));
@@ -62,9 +66,13 @@ namespace Symbols.Tests
             File.WriteAllText(Path.Combine(inputDir, "empty.txt"), string.Empty);          
             File.WriteAllText(Path.Combine(inputDir, "hello2.scv"), "there are chars");
             File.WriteAllText(Path.Combine(inputDir, "b.txt"), "b");
+            var start = DateTime.Now;
             while (watcher.FilesInStatistics < 3)
             {
-
+                if (DateTime.Now - start > TimeSpan.FromSeconds(30))
+                {
+                    throw new TimeoutException();
+                }
             }
             Assert.IsNotNull(result);
             Assert.IsTrue(result.SequenceEqual(new Dictionary<char, int> { { 'a', 23 }, { 'l', 3 }, { 'o', 2 }, { ' ', 1 }, { 'b', 1 } }));

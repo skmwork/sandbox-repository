@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Text;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Symbols.Core;
 using System;
 using System.Collections.Generic;
@@ -10,72 +11,125 @@ namespace Symbols.Tests
     [TestClass]
     public class FileWatchTests
     {
-        [TestMethod]
-        public void FilesTest1()
+        static string _inputDir = Path.GetFullPath(@"in");
+        [TestInitialize]
+        public void SetUp()
         {
-            const string inputDir = @"in";
-            var watcher = new FileWatcherByEvents(inputDir);
-            if (Directory.Exists(watcher.InputDir))
+            if (Directory.Exists(_inputDir))
             {
-                Directory.GetFiles(watcher.InputDir).ToList().ForEach(File.Delete);
+                Directory.GetFiles(_inputDir).ToList().ForEach(File.Delete);
+                Directory.Delete(_inputDir);
             }
-            File.WriteAllText(Path.Combine(inputDir, "repeata.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
-            File.WriteAllText(Path.Combine(inputDir, "hello.txt"), "hello world");
-            File.WriteAllText(Path.Combine(inputDir, "hello2.txt"), "hello world");
-            File.WriteAllText(Path.Combine(inputDir, "hello2.scv"), "there are chars");
-            File.WriteAllText(Path.Combine(inputDir, "repeata2.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
-            File.WriteAllText(Path.Combine(inputDir, "empty.txt"), string.Empty);
-            File.WriteAllText(Path.Combine(inputDir, "b.txt"), "b");
+        }
+        [TestCleanup]
+        public void CleanUp()
+        {
+            if (Directory.Exists(_inputDir))
+            {
+                Directory.GetFiles(_inputDir).ToList().ForEach(File.Delete);
+                Directory.Delete(_inputDir);
+            }
+        }
+
+        [TestMethod]
+        public void ArchiveTest1()
+        {
+            var watcher = new FileWatcherByEvents(_inputDir);          
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeata.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "hello.txt"), "hello world");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "hello2.txt"), "hello world");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "hello2.scv"), "there are chars");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeata2.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "empty.txt"), string.Empty);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "b.txt"), "b");
             var result = new Dictionary<char, int>();
             watcher.StatisticsWasUpdated += s =>
             {
                 result = s;
             };
             watcher.Start();
-            var start = DateTime.Now;
-            while (watcher.FilesInStatistics < 3)
-            {
-                if (DateTime.Now - start > TimeSpan.FromSeconds(30))
-                {
-                    throw new TimeoutException();
-                }
-            }
+            Wait(watcher,3);
             Assert.IsNotNull(result);
             Assert.IsTrue(result.SequenceEqual(new Dictionary<char, int> { { 'a', 23 }, { 'l', 3 }, { 'o', 2 }, { ' ', 1 }, { 'b', 1 } }));
         }
 
+
         [TestMethod]
-        public void FilesTest2()
+        public void EventTest()
         {
-            const string inputDir = @"in";
-            var watcher = new FileWatcherByEvents(inputDir);
-            if (Directory.Exists(watcher.InputDir))
-            {
-                Directory.GetFiles(watcher.InputDir).ToList().ForEach(File.Delete);
-            }
+            var watcher = new FileWatcherByEvents(_inputDir);
             var result = new Dictionary<char, int>();
             watcher.StatisticsWasUpdated += s =>
             {
                 result = s;
             };
             watcher.Start();
-            File.WriteAllText(Path.Combine(inputDir, "hello.txt"), "hello world");
-            File.WriteAllText(Path.Combine(inputDir, "hello2.txt"), "hello world");
-            File.WriteAllText(Path.Combine(inputDir, "repeata.txt"), "");
-            File.WriteAllText(Path.Combine(inputDir, "repeata2.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
-            File.WriteAllText(Path.Combine(inputDir, "empty.txt"), string.Empty);          
-            File.WriteAllText(Path.Combine(inputDir, "hello2.scv"), "there are chars");
-            File.WriteAllText(Path.Combine(inputDir, "b.txt"), "b");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "hello.txt"), "hello world");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "hello2.txt"), "hello world");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeata.txt"), "");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeata2.txt"), "aaaaaaaaaaaaaaaaaaaaaaa");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "empty.txt"), string.Empty);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "hello2.scv"), "there are chars");
+            File.WriteAllText(Path.Combine(watcher.InputDir, "b.txt"), "b");
+            Wait(watcher,3);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.SequenceEqual(new Dictionary<char, int> { { 'a', 23 }, { 'l', 3 }, { 'o', 2 }, { ' ', 1 }, { 'b', 1 } }));
+        }
+
+
+        [TestMethod]
+        public void RussianTest()
+        {
+            var watcher = new FileWatcherByEvents(_inputDir);
+            var result = new Dictionary<char, int>();
+            watcher.StatisticsWasUpdated += s =>
+            {
+                result = s;
+            };
+            watcher.Start();
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_а.txt"), "ааааа", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_б.txt"), "бббб", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_в.txt"), "ввв", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_г.txt"), "гг", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_д.txt"), "д", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_а_2.txt"), "ааааа", Encoding.UTF8);
+            Wait(watcher,5);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.SequenceEqual(new Dictionary<char, int> { { 'а', 5 }, { 'б', 4 }, { 'в', 3 }, { 'г', 2 }, { 'д', 1 } }));
+        }
+
+
+        [TestMethod]
+        public void EnglishTest()
+        {
+            var watcher = new FileWatcherByEvents(_inputDir);
+            var result = new Dictionary<char, int>();
+            watcher.StatisticsWasUpdated += s =>
+            {
+                result = s;
+            };
+            watcher.Start();
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_a.txt"), "aaaaaaaaaa", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_b.txt"), "bbbbbbbb", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_c.txt"), "cccccc", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_d.txt"), "dddd", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_e.txt"), "ee", Encoding.UTF8);
+            File.WriteAllText(Path.Combine(watcher.InputDir, "repeat_a_2.txt"), "aaaaaaaaaa", Encoding.UTF8);
+            Wait(watcher,5);
+            Assert.IsNotNull(result);
+            Assert.IsTrue(result.SequenceEqual(new Dictionary<char, int> { { 'a', 10 }, { 'b', 8 }, { 'c', 6 }, { 'd', 4 }, { 'e', 2 } }));
+        }
+
+        private static void Wait(FileWatcherByEvents watcher, int filesCount)
+        {
             var start = DateTime.Now;
-            while (watcher.FilesInStatistics < 3)
+            while (watcher.FilesInStatistics < filesCount)
             {
                 if (DateTime.Now - start > TimeSpan.FromSeconds(30))
                 {
                     throw new TimeoutException();
                 }
             }
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.SequenceEqual(new Dictionary<char, int> { { 'a', 23 }, { 'l', 3 }, { 'o', 2 }, { ' ', 1 }, { 'b', 1 } }));
         }
 
         [TestMethod]

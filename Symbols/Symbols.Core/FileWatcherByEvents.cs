@@ -19,12 +19,14 @@ namespace Symbols.Core
         public event Action<Dictionary<char, int>> StatisticsWasUpdated;
 
         public FileWatcherByEvents(string inDir)
-        {
+        {        
             if (string.IsNullOrEmpty(inDir))
             {
                 throw new ArgumentException("Путь к папке с файлами не задан");
             }
+
             InputDir = Path.GetFullPath(inDir);
+
             if (!Directory.Exists(InputDir))
             {
                 Directory.CreateDirectory(InputDir);
@@ -35,6 +37,10 @@ namespace Symbols.Core
 
         public void Start()
         {
+            if (!Directory.Exists(InputDir))
+            {
+                Directory.CreateDirectory(InputDir);
+            }
             Directory.GetFiles(InputDir, "*.txt").Select(x=>File.ReadAllText(x,Encoding.UTF8)).ToList().ForEach(_stats.AddStatistic);
             OnStatisticsWasUpdated();           
             _watcher.Created += WatcherOnCreated;
@@ -42,6 +48,10 @@ namespace Symbols.Core
 
         private void WatcherOnCreated(object sender, FileSystemEventArgs fileSystemEventArgs)
         {
+            if (!File.Exists(fileSystemEventArgs.FullPath))
+            {
+                return;
+            }
             if (Path.GetExtension(fileSystemEventArgs.Name) != ".txt")
             {
                 return;

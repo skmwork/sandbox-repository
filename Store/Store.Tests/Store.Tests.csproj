@@ -112,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UnitTest1.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App.config" />
@@ -120,6 +121,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Store.Domain\Store.Domain.csproj">
+      <Project>{BB1F4D54-C073-4012-8CEC-00D5FC8001E0}</Project>
+      <Name>Store.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Store.WebUI\Store.WebUI.csproj">
       <Project>{246C0F4A-09DA-4FC2-AB4D-563FAE4CB213}</Project>
       <Name>Store.WebUI</Name>

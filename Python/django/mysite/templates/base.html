@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% load static %}
+    <title>{% block title %}Мой сайт{% endblock %}</title>
+</head>
+<body>
+<img src="{% static "cat.jpg" %}" alt="My image">
+    {% block content %}{% endblock %}
+</body>
+</html>

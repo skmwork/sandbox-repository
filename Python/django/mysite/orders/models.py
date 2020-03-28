@@ -18,8 +18,8 @@ class Status(models.Model):
 
 class Order(models.Model):
     customer_name = models.CharField(max_length=128)
-    customer_email = models.EmailField(max_length=48, balnk=True, default=None)
-    status = models.ForeignKey(Status, blank=True, Null=True, default=None)
+    customer_email = models.EmailField(max_length=48, blank=True, default=None)
+    status = models.ForeignKey(Status, blank=True, null=True, default=None, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
@@ -32,6 +32,6 @@ class Order(models.Model):
 
 
 class ProductInOrder(models.Model):
-    order = models.ForeignKey(Order, blank=True, Null=True, default=None)
-    product = models.ForeignKey(Product, blank=True, Null=True, default=None)
+    order = models.ForeignKey(Order, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
 

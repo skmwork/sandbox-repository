@@ -62,3 +62,4 @@ Python/django/mysite/mysite/static
 *.sqlite3
 *initial.py
 *.iml
+*.jpg

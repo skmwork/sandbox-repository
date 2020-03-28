@@ -23,6 +23,6 @@ class ProductImage(models.Model):
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
     class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+        verbose_name = 'Картинки'
+        verbose_name_plural = 'Картинки'
 

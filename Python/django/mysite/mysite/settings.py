@@ -17,6 +17,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(__file__)
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'files', 'media')
+MEDIA_URL = '/media/'
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
@@ -134,3 +137,10 @@ STATICFILES_DIRS = (
 )
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
+
+ADMIN_MEDIA_PREFIX = '/static/admin/'

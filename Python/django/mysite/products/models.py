@@ -7,6 +7,7 @@ class Product(models.Model):
     description = models.TextField(blank=True, null=True, default=None)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    price = models.DecimalField('Стоимость', max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
         return self.name
@@ -17,10 +18,11 @@ class Product(models.Model):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, default=0)
     image = models.ImageField(upload_to='products_images/')
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
 
     class Meta:
         verbose_name = 'Картинки'

@@ -22,6 +22,8 @@ class Order(models.Model):
     status = models.ForeignKey(Status, blank=True, null=True, default=None, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    comment = models.TextField('Комментарий', null=True, blank=True, default=None)
+    total_price = models.DecimalField('Общая стоимость', default=0, max_digits=10, decimal_places=2)
 
     def __str__(self):
         return f'Пользователь {self.customer_name} {self.customer_email} Заказ №{self.id}'
@@ -34,4 +36,13 @@ class Order(models.Model):
 class ProductInOrder(models.Model):
     order = models.ForeignKey(Order, blank=True, null=True, default=None, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, blank=True, null=True, default=None, on_delete=models.CASCADE)
+    nmb = models.IntegerField('Количество товаров', null=True, blank=True, default=1)
+    price_per_item = models.DecimalField('Цена за единицу', default=0, max_digits=10, decimal_places=2)
+    total_price = models.DecimalField('Суммарная стоимость', default=0, max_digits=10, decimal_places=2)
+    created = models.DateTimeField(auto_now_add=True, auto_now=False)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    class Meta:
+        verbose_name = 'Продукт в заказе'
+        verbose_name_plural = 'Продукты в заказе'
 

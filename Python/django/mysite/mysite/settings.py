@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'articles.apps.ArticlesConfig',
     'orders.apps.OrdersConfig',
     'products.apps.ProductsConfig',
+    'landing.apps.LandingConfig',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',

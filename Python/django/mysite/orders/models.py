@@ -1,5 +1,6 @@
 from django.db import models
 from products.models import Product
+from django.db.models.signals import post_save
 
 
 # Create your models here.
@@ -41,8 +42,34 @@ class ProductInOrder(models.Model):
     total_price = models.DecimalField('Суммарная стоимость', default=0, max_digits=10, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+    is_active = models.BooleanField('Активная позиция', null=True, blank=True)
 
     class Meta:
         verbose_name = 'Продукт в заказе'
         verbose_name_plural = 'Продукты в заказе'
+
+    def save(self, *args, **kwargs):
+        price_per_item = self.product.price
+        nmb = self.nmb
+
+        self.price_per_item = price_per_item
+        self.total_price = nmb*price_per_item
+
+        super(ProductInOrder, self).save(*args, **kwargs)
+
+
+def product_in_order_post_save(sender, instance, created, **kwargs):
+    order = instance.order
+    all_products_in_order = ProductInOrder.objects.filter(order=order)
+    order_total_price = 0
+    for item in all_products_in_order:
+        order_total_price+=item.total_price
+
+    instance.order.total_price = order_total_price
+    instance.order.save(force_update=True)
+
+
+post_save.connect(product_in_order_post_save, sender=ProductInOrder)
+
+
 

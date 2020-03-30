@@ -10,7 +10,7 @@ class Product(models.Model):
     price = models.DecimalField('Стоимость', max_digits=10, decimal_places=2, default=0)
 
     def __str__(self):
-        return self.name
+        return f'{self.price}, {self.name}'
 
     class Meta:
         verbose_name = 'Товар'
@@ -23,8 +23,6 @@ class ProductImage(models.Model):
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
 
-
     class Meta:
         verbose_name = 'Картинки'
         verbose_name_plural = 'Картинки'
-

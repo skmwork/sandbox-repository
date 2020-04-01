@@ -42,7 +42,10 @@ class ProductInOrder(models.Model):
     total_price = models.DecimalField('Суммарная стоимость', default=0, max_digits=10, decimal_places=2)
     created = models.DateTimeField(auto_now_add=True, auto_now=False)
     updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-    is_active = models.BooleanField('Активная позиция', null=True, blank=True)
+    is_active = models.BooleanField('Активная позиция', default=True)
+
+    def __str__(self):
+        return f'{self.product.name} - {self.nmb} по цене {self.price_per_item}'
 
     class Meta:
         verbose_name = 'Продукт в заказе'

@@ -23,8 +23,8 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('', include('landing.urls')),
     path('articles/', include('articles.urls')),
-    path('orders/', include('orders.urls')),
-    path('products/', include('products.urls')),
+    path('order/', include('orders.urls')),
+    path('product/', include('products.urls')),
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
     path('admin/', admin.site.urls)
 ]

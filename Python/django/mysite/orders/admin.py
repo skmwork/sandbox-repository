@@ -15,3 +15,4 @@ class OrderAdmin(admin.ModelAdmin):
 admin.site.register(Status)
 admin.site.register(Order, OrderAdmin)
 admin.site.register(ProductInOrder)
+

@@ -1,0 +1,48 @@
+html, body{
+    background-color: #edeef0;
+}
+
+.section-top{
+    margin: 5px
+}
+
+.product-item img {
+    height: 160px;
+}
+
+.product-item{
+    height: 400px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    position: relative;
+    padding: 10px 0 10px 0;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.add-to-card-btn{
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+}
+
+.discount-container{
+    position: absolute;
+    top: 30%;
+    background: #55e073;
+    width: 30%;
+    color: white;
+    font-weight: 700;
+    padding: 3px;
+}
+
+.product-description-tabs{
+    padding: 10px
+}
+
+.product-image-item{
+    padding-bottom:10px;
+    margin-bottom: 5px;
+}

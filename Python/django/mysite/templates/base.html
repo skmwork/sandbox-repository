@@ -42,7 +42,9 @@
         {% block content %}
         {% endblock %}
         </div>
+        <form id="csrf_token">{% csrf_token %}</form>
     </div>
+
 </main>
 {% include 'footer.html' %}
 <script src="{% static '/js/jquery-3.4.1.min.js' %}"></script>

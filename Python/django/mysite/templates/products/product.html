@@ -8,23 +8,22 @@
                 <div class="product-image-item">
                     <img src="{{ image_item.image.url }}"  class="img-fluid"/>
                 </div>
-
             {% endfor %}
         </div>
         <div class="col-lg-6">
             <h5>{{ product.name }}</h5>
             <p>{{ product.price }}</p>
-            <form id="from_buying_product" class="form-inline">
-                <input type="number" class="form-control" name="number" id="number">
+            <form id="buy_product" class="form-inline m-2" action="{% url 'orders:add_product_to_basket' %}">
+                <input type="number" class="form-control m-2" name="number" id="number" min="1" max="100"  value="1">
                 <button type="submit" id="submit_btn"
-                        class="btn btn-success btn-buy"
+                        class="btn btn-success btn-buy m-2"
                         data-product_id="{{ product.id }}"
                         data-product_price="{{ product.price }}"
                         data-product_name="{{ product.name }}">
-                    Купить
+                    Добавить в корзину
                 </button>
             </form>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <ul class="nav nav-tabs m-2" id="myTab" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Описание</a>
               </li>
@@ -35,10 +34,6 @@
             <div class="tab-content">
               <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">{{ product.description }}</div>
               <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">Доставка в рабочие дни с 5 до 6</div>
-            </div>
-            <div>
-
-
             </div>
         </div>
     </div>

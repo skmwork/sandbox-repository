@@ -1,0 +1,18 @@
+<ul class="nav navbar-nav navbar-right">
+  <li class="nav-item dropdown basket-container">
+    <a class="nav-link dropdown-toggle" href="#" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Корзина <span id="basket_total_price">({% if order %}{{ order.total_price }}{% else %}0{% endif %})</span>
+    </a>
+    <ul class="dropdown-menu  dropdown-menu-right basket-items" aria-labelledby="dropdownMenuButton">
+        {%if products_in_basket %}
+            {% for product_in_basket in products_in_basket %}
+                <li class="dropdown-item">{{ product_in_basket.product.name }}, {{ product_in_basket.nmb }}шт. по {{ product_in_basket.product.price }}р.
+                    <a class="delete" href="/" data-product_in_basket_id="{{ product_in_basket.id }}">x</a>
+                </li>
+            {% endfor %}
+        {% else %}
+        <li class="dropdown-item">Корзина пуста</li>
+        {% endif %}
+    </ul>
+  </li>
+</ul>

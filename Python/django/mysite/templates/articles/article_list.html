@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Последние статьи{% endblock %}
+
+{% block content %}
+
+
+<div class="pagination">
+    <span class="step-links">
+
+
+    {% if articles %}
+        <h1>Статьи:</h1>
+        {% for a in articles %}
+            <br/>
+        <h5> <a href="{% url 'articles:detail' a.id %}">{{a.article_title}}</a></h5>
+            <p  class="text-muted date"> Опубликовано {{ a.pub_date }}</p>
+            {{ a.article_text|truncatewords:50|linebreaks }}
+
+        {% endfor %}
+    {% else %}
+        <h1 class="mt-5">Статьи не найдены</h1>
+    {% endif %}
+{% include "pagination.html" with page=page_obj %}
+{% endblock %}

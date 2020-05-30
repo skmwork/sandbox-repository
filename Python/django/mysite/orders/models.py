@@ -1,5 +1,5 @@
 from django.db import models
-from products.models import Product
+from products.models import *
 from django.db.models.signals import post_save
 
 

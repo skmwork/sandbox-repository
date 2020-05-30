@@ -18,16 +18,24 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from blog.sitemaps import PostSitemap
+from django.contrib.sitemaps.views import sitemap
+
+
+sitemaps = {
+    'posts': PostSitemap,
+}
 
 
 urlpatterns = [
-    path('', include('landing.urls')),
-    path('articles/', include('articles.urls')),
+    path('', include('products.urls')),
     path('order/', include('orders.urls')),
-    path('product/', include('products.urls')),
-    path('grappelli/', include('grappelli.urls')), # grappelli URLS
-    path('admin/', admin.site.urls)
+    path('grappelli/', include('grappelli.urls')),
+    path('admin/', admin.site.urls),
+    path('blog/', include('blog.urls')),
+    path('sitemap.xml/', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
 ]
+
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 urlpatterns += staticfiles_urlpatterns()

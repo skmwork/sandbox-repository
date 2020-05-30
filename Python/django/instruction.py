@@ -1,5 +1,6 @@
 #создать проект в cmd
 django-admin startproject mysite
+django-admin startproject bookmarks
 
 #настройки
 settings.py

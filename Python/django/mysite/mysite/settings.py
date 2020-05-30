@@ -14,7 +14,10 @@ import os, sys
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
+
 TEMPLATE_DIR = os.path.join(BASE_DIR, "templates")
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'files', 'media')
@@ -31,14 +34,10 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+SITE_ID = 1
 # Application definition
 
 INSTALLED_APPS = [
-    'articles.apps.ArticlesConfig',
-    'orders.apps.OrdersConfig',
-    'products.apps.ProductsConfig',
-    'landing.apps.LandingConfig',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +45,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'blog',
+    'orders',
+    'products',
+    'taggit',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
@@ -113,6 +119,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}
 
 
 # Internationalization

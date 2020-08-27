@@ -11,10 +11,11 @@
 </head>
 <body>
 <div id="header">
-    <a href="/" class="logo">{% trans "My shop" %}</a>
+
     {% get_current_language as LANGUAGE_CODE %}
     {% get_available_languages as LANGUAGES %}
     {% get_language_info_list for LANGUAGES as languages %}
+
     <div class="languages">
         <p>{% trans "Language" %}:</p>
         <ul class="languages">
@@ -27,13 +28,27 @@
             {% endfor %}
         </ul>
     </div>
+        <div class="user">
+        {% if request.user.is_authenticated %}
+        <a href='{% url "accounts:edit" %}'>
+        {% if request.user.first_name %}
+         {{ request.user.first_name }}
+        {% else %}
+            {% trans "User" %}
+        {% endif %}
+            </a>
+        {% else %}
+            <a href='{% url "accounts:login" %}'>{% trans "Log-in" %}</a>
+        {% endif %}
+    </div>
 </div>
 <div id="subheader">
+    <a href='{% url "shop:product_list" %}' class="logo">{% trans "My shop" %}</a>
     <div class="cart">
         {% with total_items=cart|length %}
             {% if cart|length > 0 %}
                 {% trans "Your cart" %}:
-                <a href="{% url "cart:cart_detail" %}">
+                <a href="{% url 'cart:cart_detail' %}">
 					{% blocktrans with total_price=cart.get_total_price_after_discount count total_items_plural=total_items %}
 						{{ total_items }} item, {{ total_price }} rub.{% plural %} {{ total_items }} items, {{ total_price }} rub.
 					 {% endblocktrans %}
@@ -43,6 +58,7 @@
             {% endif %}
         {% endwith %}
     </div>
+
 </div>
 <div id="content">
     {% block content %}

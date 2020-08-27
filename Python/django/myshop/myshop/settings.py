@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'cart',
     'orders',
     'coupons',
+    'accounts',
     'sorl.thumbnail',
     'rosetta',
 ]
@@ -143,3 +145,21 @@ LANGUAGES = (
     ('en', _('English')),
     ('ru', _('Russian')),
 )
+
+
+
+
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                           'accounts.authentication.EmailAuthBackend',
+                           ]
+
+
+from django.urls import reverse, reverse_lazy
+
+LOGIN_REDIRECT_URL = 'shop:product_list'
+LOGIN_URL = 'accounts:login'
+
+LOGOUT_URL = 'accounts:logout'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = True
+#ACCOUNT_SIGNUP_FORM_CLASS = 'accounts.forms.SignupForm'

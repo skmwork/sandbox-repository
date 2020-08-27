@@ -22,11 +22,13 @@ from django.utils.translation import gettext_lazy as _
 
 
 urlpatterns = i18n_patterns(
+
     path('rosetta/', include('rosetta.urls')),
     path('admin/', admin.site.urls),
     path(_('cart/'), include('cart.urls', namespace='cart')),
     path(_('orders/'), include('orders.urls', namespace='orders')),
     path(_('coupons/'), include('coupons.urls', namespace='coupons')),
+    path('account/', include('accounts.urls', namespace='accounts')),
     path('', include('shop.urls')),
     
 )

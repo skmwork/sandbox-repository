@@ -4,12 +4,11 @@ from decimal import Decimal
 from django.core.validators import MinValueValidator, MaxValueValidator
 from coupons.models import Coupon
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 
 class Order(models.Model):
-    first_name = models.CharField(_('First name'), max_length=50)
-    last_name = models.CharField(_('Last name'), max_length=50)
-    email = models.EmailField(_('Email'), )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='images_created', on_delete=models.CASCADE, null=False)
     address = models.CharField(_('Address'), max_length=250)
     postal_code = models.CharField(_('Postal code'), max_length=20)
     city = models.CharField(_('City'), max_length=100)

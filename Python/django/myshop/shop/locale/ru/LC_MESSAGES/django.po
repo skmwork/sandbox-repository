@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-21 01:06-0700\n"
-"PO-Revision-Date: 2020-05-21 09:23+0000\n"
-"Last-Translator: b'  <ya@ya.ru>'\n"
+"POT-Creation-Date: 2020-08-27 00:39-0700\n"
+"PO-Revision-Date: 2020-08-27 10:53+0000\n"
+"Last-Translator: b'admin  <ya@ya.ru>'\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -18,10 +18,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n%100>=11 && n%100<=14)? 2 : 3);\n"
 "X-Translated-Using: django-rosetta 0.9.4\n"
-
-#: apps.py:7
-msgid "Shop"
-msgstr "Магазин"
 
 #: models.py:7
 msgid "Category name"
@@ -35,7 +31,7 @@ msgstr "Путь"
 msgid "Category"
 msgstr "Категория"
 
-#: models.py:13 templates/shop/product/list.html:9
+#: models.py:13 templates/product/list.html:9
 msgid "Categories"
 msgstr "Категории"
 
@@ -75,53 +71,62 @@ msgstr "Обновлено"
 msgid "Product"
 msgstr "Товар"
 
-#: models.py:39 templates/shop/product/list.html:5
-#: templates/shop/product/list.html:22
+#: models.py:39 templates/product/list.html:5 templates/product/list.html:22
 msgid "Products"
 msgstr "Товары"
 
-#: templates/shop/base.html:8 templates/shop/base.html:14
+#: templates/base.html:8 templates/base.html:14
 msgid "My shop"
 msgstr "Магазин"
 
-#: templates/shop/base.html:19
+#: templates/base.html:19
 msgid "Language"
 msgstr "Язык"
 
-#: templates/shop/base.html:35
+#: templates/base.html:36
+msgid "Log-in"
+msgstr "Войти"
+
+#: templates/base.html:42
 msgid "Your cart"
 msgstr "Корзина"
 
-#: templates/shop/base.html:37
+#: templates/base.html:44
 #, python-format
+#| msgid ""
+#| "\n"
+#| "\t\t\t\t\t\t%(total_items)s item, %(total_price)s rub."
+#| msgid_plural ""
+#| "\n"
+#| " %(total_items)s items, %(total_price)s rub.\n"
+#| "\t\t\t\t\t "
 msgid ""
 "\n"
 "\t\t\t\t\t\t%(total_items)s item, %(total_price)s rub."
 msgid_plural ""
-"\n"
 " %(total_items)s items, %(total_price)s rub.\n"
 "\t\t\t\t\t "
 msgstr[0] ""
-"\n"
 " %(total_items)s товар, %(total_price)s руб.\n"
 "\t\t\t\t\t "
 msgstr[1] ""
-"\n"
 " %(total_items)s товара, %(total_price)s руб.\n"
 "\t\t\t\t\t "
 msgstr[2] ""
-"\n"
 " %(total_items)s товаров, %(total_price)s руб.\n"
 "\t\t\t\t\t "
 
-#: templates/shop/base.html:42
+#: templates/base.html:49
 msgid "Your cart is empty"
 msgstr "Ваша корзина пуста"
 
-#: templates/shop/product/detail.html:15 templates/shop/product/list.html:34
+#: templates/product/detail.html:15 templates/product/list.html:34
 msgid "rub"
 msgstr "руб."
 
-#: templates/shop/product/detail.html:19
+#: templates/product/detail.html:19
 msgid "Add to cart"
 msgstr "Добавить в корзину"
+
+#~ msgid "Shop"
+#~ msgstr "Магазин"

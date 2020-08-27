@@ -5,7 +5,8 @@
 	{% trans "Your shopping cart" %}    
 {% endblock %}
 {% block content %}
-    <h1>{% trans "Your shopping cart" %} </h1>
+{% if cart %}
+    <h1>{% trans "Your shopping cart" %}</h1>
     <table class="cart">
         <thead>
         <tr>
@@ -73,4 +74,7 @@
             {% trans "Checkout" %} 
         </a>
     </p>
+{% else %}
+<h1>{% trans "Your cart is empty" %}</h1>
+{% endif %}
 {% endblock %}

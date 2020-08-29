@@ -27,7 +27,6 @@ def add_product_to_basket(request):
     print(product_id)
 
     nmb = decimal.Decimal(data.get('nmb'))
-    print(product_id, nmb)
     product = Product.objects.get(id=product_id)
     try:
         order = Order.objects.get(session_key=current_session_key, is_basket=True)

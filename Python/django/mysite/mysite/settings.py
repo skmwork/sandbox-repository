@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'orders',
     'products',
     'taggit',
+    'accounts',
     'django.contrib.sites',
     'django.contrib.sitemaps',
 ]
@@ -158,3 +159,8 @@ STATICFILES_FINDERS = (
 )
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+from django.urls import reverse_lazy
+LOGIN_REDIRECT_URL = reverse_lazy('products:index')
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'

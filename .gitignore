@@ -64,5 +64,6 @@ Python/django/mysite/mysite/static
 *.iml
 *.jpg
 */env/
-Python/django/env/*
+Python/*/env/*
 Python/*/migrations/*
+Python/*/venv/

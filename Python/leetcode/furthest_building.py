@@ -1,8 +1,6 @@
-
-
+# https://leetcode.com/explore/featured/card/april-leetcoding-challenge-2021/596/week-4-april-22nd-april-28th/3721/
+# You are given an integer array heights representing the heights of buildings, some bricks, and some ladders.
 import heapq
-#https://leetcode.com/explore/featured/card/april-leetcoding-challenge-2021/596/week-4-april-22nd-april-28th/3721/
-#You are given an integer array heights representing the heights of buildings, some bricks, and some ladders.
 
 
 class Solution:

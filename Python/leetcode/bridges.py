@@ -1,7 +1,8 @@
-#https://leetcode.com/explore/challenge/card/april-leetcoding-challenge-2021/596/week-4-april-22nd-april-28th/3719/
-#Critical Connections in a Network
-#A critical connection is a connection that, if removed, will make some server unable to reach some other server.
-#4 [[1,0],[2,0],[3,0],[4,1],[4,2],[4,0]] -> [[3, 0]]
+# https://leetcode.com/explore/challenge/card/april-leetcoding-challenge-2021/596/week-4-april-22nd-april-28th/3719/
+# Critical Connections in a Network
+# A critical connection is a connection that, if removed, will make some server unable to reach some other server.
+# 4 [[1,0],[2,0],[3,0],[4,1],[4,2],[4,0]] -> [[3, 0]]
+
 class Solution:
     def criticalConnections(self, n: int, connections):
         if not connections or not connections[0] or connections[0][0] is None:

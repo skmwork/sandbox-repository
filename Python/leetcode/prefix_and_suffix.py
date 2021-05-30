@@ -1,4 +1,10 @@
 # https://leetcode.com/explore/challenge/card/may-leetcoding-challenge-2021/598/week-1-may-1st-may-7th/3728/
+# Given the head of a singly linked list where elements are sorted in ascending order,
+# convert it to a height balanced BST.
+#
+# For this problem, a height-balanced binary tree is defined as a binary tree in which
+# the depth of the two subtrees of every node never differ by more than 1.
+
 from functools import lru_cache
 
 

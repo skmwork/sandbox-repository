@@ -1,3 +1,12 @@
+# https://leetcode.com/explore/featured/card/may-leetcoding-challenge-2021/598/week-1-may-1st-may-7th/3732/
+# Given an array of non-negative integers nums, you are initially positioned at the first index of the array.
+#
+# Each element in the array represents your maximum jump length at that position.
+#
+# Your goal is to reach the last index in the minimum number of jumps.
+#
+# You can assume that you can always reach the last index.
+
 class Solution:
     def jump(self, nums):
         res, ln = [0 for _ in nums], len(nums)
